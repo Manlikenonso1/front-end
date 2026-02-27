@@ -1,7 +1,7 @@
 (function (){
   'use strict';
 
-  var axios = require("axios");
+  var request = require("request");
   var helpers = {};
 
   /* Public: errorHandler is a middleware that handles your errors
@@ -76,13 +76,10 @@
    * });
    */
   helpers.simpleHttpRequest = function(url, res, next) {
-    axios.get(url)
-      .then(function(response) {
-        helpers.respondSuccessBody(res, response.data);
-      })
-      .catch(function(error) {
-        return next(error);
-      });
+    request.get(url, function(error, response, body) {
+      if (error) return next(error);
+      helpers.respondSuccessBody(res, body);
+    }.bind({res: res}));
   }
 
   /* TODO: Add documentation */
