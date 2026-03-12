@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build: .
+    platform: linux/amd64
+    image: manlikenonso/frontend:v1
+    ports:
+      - "55490:8079"
